@@ -8,13 +8,24 @@ function carousel(wrap,options){
   *        :{Number} height
   **/
 
+  // 水平移动动画
+  function horizontalMove(){
+    var left = -cur * width;
+    list.style.left = left + 'px';
+  }
+
+  // 垂直移动动画
+  function verticalMove(){
+    var top = -cur * height;
+    list.style.top = top + 'px';
+  }
+
   // 播放
   function play(){
     blur(cur);
     cur = (cur + 1) % len;
     focus(cur);
-    var left = -cur * width;
-    list.style.left = left + 'px';
+    move();
   }
 
   // 重新播放
@@ -38,6 +49,7 @@ function carousel(wrap,options){
   // 初始化参数
   var width = options.width;
   var height = options.height;
+  var type = options.type;
   var cur = -1;
   var items = document.getElementsByClassName('carousel-item');
   var len = items.length;
@@ -50,7 +62,19 @@ function carousel(wrap,options){
   var pointWrap = document.getElementsByClassName('carousel-points')[0];
   pointWrap.style.left = (width - (len-1) * 4 - len * 5)/2 + 'px';
 
-  list.style.width = width * len + 'px';
+  // 选取动画类别
+  // 0为水平移动 1为垂直移动
+  var move;
+  if (type === 0){
+    list.style.width = width * len + 'px';
+    list.style.height = height + 'px';
+    move = horizontalMove;
+  }
+  else {
+    list.style.height = height * len + 'px';
+    list.style.width = width + 'px';
+    move = verticalMove;
+  }
   list.style.height = height + 'px';
   for (var i = 0; i < len; i ++){
     items[i].style.width = width + 'px';
@@ -118,6 +142,6 @@ function carousel(wrap,options){
   }
 
   play();
-  var time = setInterval(play,2000);
+  var time = setInterval(play,3000);
 }
 

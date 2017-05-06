@@ -7,10 +7,9 @@
   overflow: hidden;
 }
 .carousel-list{
-  height: 300px;
   position: absolute;
   top: 0;
-  transition: left .5s; 
+  transition: all .5s; 
 }
 .carousel-item{
   float: left;
